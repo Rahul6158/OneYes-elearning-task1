@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+/* Add margin-top to the body or .search-container to push it below the navbar */
+body {
+    background-color: rgb(255, 255, 255);
+    
+    margin-top: 60px; /* Adjust this value depending on the height of your navbar */
+}
+
+/* Navigation Bar */
+nav {
+    background-color: rgb(5, 5, 5); /* Semi-transparent background with 30% opacity */
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed; /* Keep it fixed at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-bottom: 2px solid white;
+}
+
+/* Logo Style */
+.nav-logo {
+    display: flex;
+    align-items: center; /* Vertically center the logo and text */
+    justify-content: space-between; /* Space between the logo image and text */
+    padding: 10px;
+    text-align: left;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: transparent; /* Make the logo's background transparent */
+    width: 100%; /* Make sure the container stretches across the full width */
+}
+
+.nav-logo h4 {
+    text-align: center; /* Ensure the text aligns properly */
+    flex-grow: 1; /* Allow h4 to grow and occupy the available space */
+    margin: 0; /* Remove any default margins for precise alignment */
+}
+
+#logo-img {
+    max-height: 50px; /* Adjust based on your image size */
+    margin-right: 10px; /* Space between the image and the h4 text */
+    height: 50px;
+    width: 50px;
+}
+
+/* Default style for the nav-links (desktop) */
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Menu Icon for Mobile */
+.nav-menu-icon {
+    display: none;
+    cursor: pointer;
+    width: 30px;  /* Ensures the icon is properly sized */
+    height: 30px;
+}
+
+/* When the menu is active, display it */
+.nav-links.active {
+    display: flex;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    padding: 5px;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    background-color: #333333ac;
+}
+
+.nav-links svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* When the menu is active, slide it in from the right */
+.nav-links.active {
+    margin-top: 50px;
+    display: flex;
+    right: 0;
+    left: auto;
+    text-align: center;
+}
+
+
+/* Optional: Adding a little padding and style to individual menu items */
+.nav-links a {
+    padding: 8px;
+    text-align: right; /* Ensure the text is left-aligned */
+}
+
+
+/* Container for all course cards */
+.courses-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+    background-color:rgb(255, 255, 255);
+}
+
+/* Individual course card */
+.course-card {
+    width: 502px; /* Slightly wider for a balanced look */
+    background-color: #ffffff; /* Clean, professional white background */
+    border-radius: 12px; /* Softer, modern corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Elegant depth with shadow */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transitions */
+    margin-bottom: 30px; /* Improved spacing between cards */
+    margin-top: 60px; /* Prevent overlap with navbar */
+    padding: 0; /* Remove padding to structure content better */
+    border: 0.1px solid rgba(0, 0, 0, 0.32); /* Subtle border for a refined look */
+}
+
+/* Course Image */
+.course-image {
+    width: 100%;
+    height:54%;
+    object-fit: cover;
+    border-top-left-radius: 12px; /* Match card corners */
+    border-top-right-radius: 12px;
+    transition: transform 0.3s ease; /* Subtle zoom effect */
+}
+
+.course-image:hover {
+    transform: scale(1.05); /* Slight zoom on hover for interactivity */
+}
+
+/* Course details section */
+.course-details {
+    padding: 20px; /* Balanced spacing inside */
+    text-align: center;
+    background-color: #f9f9f9; /* Light gray background for contrast */
+}
+
+/* Course Title */
+.course-details h3 {
+    font-size: 1.5rem; /* Larger font for visibility */
+    color: #333; /* Neutral, professional text color */
+    margin-bottom: 10px;
+    font-weight: 600; /* Semi-bold for emphasis */
+}
+
+/* Course Price */
+.course-price {
+    font-size: 1.3rem; /* Slightly larger for prominence */
+    color: #009688; /* Professional accent color */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Course Description */
+.course-description {
+    font-size: 0.95rem; /* Readable font size */
+    color: #666; /* Subtle gray for secondary information */
+    margin-bottom: 20px;
+    line-height: 1.6; /* Better readability */
+}
+
+/* Enroll button */
+.enroll-btn {
+    text-decoration: none;
+    background-color: #0055fe; /* Strong, professional blue */
+    color: white;
+    padding: 12px 25px; /* Larger button for usability */
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px; /* Rounded button for modern design */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth interactions */
+}
+
+.enroll-btn:hover {
+    background-color: #0041c4; /* Darker shade on hover */
+    transform: translateY(-3px); /* Lift effect */
+}
+
+/* Hover effect for course card */
+.course-card:hover {
+    transform: translateY(-10px); /* Elevation for focus */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow for interactivity */
+    z-index: 10; /* Ensure it stands out above others */
+}
+
+/* Search Bar Container */
+.search-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+#course-search {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    border-color: #0055fe;
+}
+
+#course-search:focus {
+    border-color: #0055fe;
+    box-shadow: 0 0 5px rgba(0, 85, 254, 0.6);
+}
+/* Make sure the menu icon is visible on mobile view */
+@media (max-width: 768px) {
+    .nav-menu-icon {
+        display: flex;
+        flex-direction: column;  /* Ensure it shows up on mobile view */
+    }
+
+/* Ensuring nav links are hidden by default */
+.nav-links {
+    display: none; /* Hide the menu links by default */
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    font-size: xx-small;
+    width: 150px; /* Adjust the width to your desired size */
+    height: auto; /* Auto height to fit content */
+    background-color: #000000ef;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Initially position off-screen */
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease; /* Smooth transition when menu opens/closes */
+    color: rgb(255, 255, 255);
+}
+    #course-search {
+        width: 100%;
+    }
+    .course-image {
+        width: 100%;
+    height:40%;
+    object-fit: cover;
+    border-top-left-radius: 12px; /* Match card corners */
+    border-top-right-radius: 12px;
+    transition: transform 0.3s ease; /* Subtle zoom effect */
+}
+}
+    </style>
+    <title>Courses</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo"><img src="./images/logo.png" alt="" id="logo-img"> <h4>Expert-led courses</h4></div>
+        <!-- Menu Icon (Hamburger) -->
+        <div class="nav-menu-icon" onclick="toggleMenu()">
+            <!-- Updated Menu Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </div>
+        
+            <div class="nav-links">
+
+        <a href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>              
+           Home
+        </a>
+
+        </a>
+        <a href="courses.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+            </svg>
+            Courses
+        </a>
+        <a href="#trending">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+            </svg>
+            Trending
+        </a>
+        <a href="#contact">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+            </svg>
+            Progress
+        </a>
+
+        <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+            Profile
+            </a>
+    </div>
+    </nav>
+    <div class="courses-container">
+        <div class="search-container">
+            <input type="text" id="course-search" placeholder="Search for courses..." oninput="searchCourses()">
+        </div>
+        <div id="no-courses-message" style="display: none; text-align: center; font-size: 1.5rem; color: #555555c5; padding: 20px;">
+            No courses yet, will be added soon 😁.....
+        </div>
+        <!-- Course 1 -->
+        <div class="course-card">
+            <img src="./images/webdev.jpeg" alt="Course 1 Image" class="course-image">
+            <div class="course-details">
+                <h3>Web Development Bootcamp</h3>
+                <p class="course-price">$199.99</p>
+                <p class="course-description">Learn to build modern websites and applications with HTML, CSS, and JavaScript.</p>
+                <a href="/course1-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 2 -->
+        <div class="course-card">
+            <img src="./images/pyds.jpeg" alt="Course 2 Image" class="course-image">
+            <div class="course-details">
+                <h3>Python for Data Science</h3>
+                <p class="course-price">$249.99</p>
+                <p class="course-description">Master Python programming for data science and machine learning projects.</p>
+                <a href="/course2-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 3 -->
+        <div class="course-card">
+            <img src="./images/mlpy.jpeg" alt="Course 3 Image" class="course-image">
+            <div class="course-details">
+                <h3>Machine Learning A-Z</h3>
+                <p class="course-price">$299.99</p>
+                <p class="course-description">Understand machine learning algorithms and apply them in real-world projects.</p>
+                <a href="/course3-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 4 -->
+        <div class="course-card">
+            <img src="./images/js.jpeg" alt="Course 4 Image" class="course-image">
+            <div class="course-details">
+                <h3>JavaScript for Beginners</h3>
+                <p class="course-price">$179.99</p>
+                <p class="course-description">Begin your programming journey by mastering JavaScript fundamentals.</p>
+                <a href="/course4-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 5 -->
+        <div class="course-card">
+            <img src="./images/reactjs.png" alt="Course 5 Image" class="course-image">
+            <div class="course-details">
+                <h3>React.js for Frontend</h3>
+                <p class="course-price">$219.99</p>
+                <p class="course-description">Build dynamic user interfaces with React.js and master the art of modern frontend development.</p>
+                <a href="/course5-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 6 -->
+        <div class="course-card">
+            <img src="./images/fswd.png" alt="Course 6 Image" class="course-image">
+            <div class="course-details">
+                <h3>Full Stack Web Development</h3>
+                <p class="course-price">$349.99</p>
+                <p class="course-description">Become a full-stack web developer by mastering both front-end and back-end technologies.</p>
+                <a href="/course6-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 7 -->
+        <div class="course-card">
+            <img src="./images/sql.png" alt="Course 7 Image" class="course-image">
+            <div class="course-details">
+                <h3>Advanced SQL & Databases</h3>
+                <p class="course-price">$159.99</p>
+                <p class="course-description">Enhance your SQL skills and work with advanced database concepts to handle complex queries.</p>
+                <a href="/course7-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 8 -->
+        <div class="course-card">
+            <img src="./images/dsr.jpeg" alt="Course 8 Image" class="course-image">
+            <div class="course-details">
+                <h3>Data Analysis with R</h3>
+                <p class="course-price">$189.99</p>
+                <p class="course-description">Learn how to use R for data analysis and visualization in this comprehensive course.</p>
+                <a href="/course8-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 9 -->
+        <div class="course-card">
+            <img src="./images/mad.jpeg" alt="Course 9 Image" class="course-image">
+            <div class="course-details">
+                <h3>Mobile App Development</h3>
+                <p class="course-price">$229.99</p>
+                <p class="course-description">Develop native mobile applications for both Android and iOS using cross-platform tools.</p>
+                <a href="/course9-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 10 -->
+        <div class="course-card">
+            <img src="./images/cs.png" alt="Course 10 Image" class="course-image">
+            <div class="course-details">
+                <h3>Cybersecurity Fundamentals</h3>
+                <p class="course-price">$269.99</p>
+                <p class="course-description">Learn the core principles of cybersecurity to protect against online threats and attacks.</p>
+                <a href="/course10-enroll" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+function searchCourses() {
+    const searchInput = document.getElementById('course-search').value.toLowerCase();
+    const courseCards = document.querySelectorAll('.course-card');
+    let foundCourses = false; // Flag to check if any course matches the search
+    
+    // Hide the "no courses found" message initially
+    const noCoursesMessage = document.getElementById('no-courses-message');
+    noCoursesMessage.style.display = 'none';
+
+    courseCards.forEach(card => {
+        const courseTitle = card.querySelector('h3').textContent.toLowerCase();
+        const courseDescription = card.querySelector('.course-description').textContent.toLowerCase();
+        
+        if (courseTitle.includes(searchInput) || courseDescription.includes(searchInput)) {
+            card.style.display = 'inline-block'; // Show the card if it matches
+            foundCourses = true; // At least one course is found
+        } else {
+            card.style.display = 'none'; // Hide the card if it doesn't match
+        }
+    });
+
+    // If no courses were found, display the message
+    if (!foundCourses) {
+        noCoursesMessage.style.display = 'block';
+    }
+}
+
+function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('active'); // Toggles the active class
+    }
+
+
+    // Trigger the fade-in effect after the page loads
+window.onload = function() {
+    document.querySelector("h1").classList.add("fade-in");
+};
+
+    </script>
+</body>
+</html>
