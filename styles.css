@@ -202,6 +202,8 @@ footer p {
     text-align: center;
     justify-content: center; /* Center align content within #trend */
     gap: 10px; /* Optional: Space between items */
+    width: 90%;
+    height: 100%;
 }
 
 
