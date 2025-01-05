@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub-Style Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styling */
+        body {
+            margin-top: 90px;
+            font-family: Arial, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+nav {
+    background-color: rgb(5, 5, 5); /* Semi-transparent background with 30% opacity */
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed; /* Keep it fixed at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-bottom: 2px solid white;
+}
+
+/* Logo Style */
+.nav-logo {
+    display: flex;
+    align-items: center; /* Vertically center the logo and text */
+    justify-content: space-between; /* Space between the logo image and text */
+    padding: 10px;
+    text-align: left;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: transparent; /* Make the logo's background transparent */
+    width: 100%; /* Make sure the container stretches across the full width */
+}
+
+.nav-logo h4 {
+    text-align: center; /* Ensure the text aligns properly */
+    flex-grow: 1; /* Allow h4 to grow and occupy the available space */
+    margin: 0; /* Remove any default margins for precise alignment */
+}
+
+#logo-img {
+    max-height: 50px; /* Adjust based on your image size */
+    margin-right: 10px; /* Space between the image and the h4 text */
+    height: 50px;
+    width: 50px;
+}
+
+/* Default style for the nav-links (desktop) */
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Menu Icon for Mobile */
+.nav-menu-icon {
+    display: none;
+    cursor: pointer;
+    width: 30px;  /* Ensures the icon is properly sized */
+    height: 30px;
+}
+
+/* When the menu is active, display it */
+.nav-links.active {
+    display: flex;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    padding: 5px;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    background-color: #333333ac;
+}
+
+.nav-links svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* When the menu is active, slide it in from the right */
+.nav-links.active {
+    margin-top: 50px;
+    display: flex;
+    right: 0;
+    left: auto;
+    text-align: center;
+}
+
+
+/* Optional: Adding a little padding and style to individual menu items */
+.nav-links a {
+    padding: 8px;
+    text-align: right; /* Ensure the text is left-aligned */
+}
+
+        h1, h2, h4 {
+            color: #58a6ff;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: row;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Sidebar Styling */
+        #sidebar {
+            flex: 1;
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            padding: 20px;
+            border-radius: 12px;
+            margin-right: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        #details {
+            text-align: center;
+        }
+
+        #details img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+            border: 4px solid #30363d;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .progress, .graphs {
+            flex: 2;
+            background-color: #161b22;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 0 20px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress h4, .graphs h4 {
+            color: #34d399;
+            font-size: larger;
+        }
+
+        .course-completed, .course-in-progress {
+            background: #0f172a;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .course-completed h5, .course-in-progress h5 {
+            margin: 0;
+        }
+
+        .progress-bar {
+            background: #34d399;
+            height: 8px;
+            width: 0;
+            border-radius: 5px;
+            animation: load 2s ease-out forwards;
+        }
+
+        .progress-bar-bg {
+            background: #30363d;
+            height: 8px;
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .progress-bar-full {
+            width: 100% !important;
+            animation: none;
+        }
+
+        .graphs .graph {
+            background-color: #21262d;
+            height: 200px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b949e;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .graph-title {
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 16px;
+            color: #58a6ff;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #161b22;
+            color: #8b949e;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes load {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: var(--progress-width);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .main {
+                margin-top: 90px;
+                flex-direction: column;
+            }
+
+            #sidebar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .graphs, .progress {
+                margin-left: 0;
+                margin-right: 0;
+                width: 90%;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .graph {
+                height: 150px;
+            }
+
+            .more-graphs-btn {
+                width: 100%;
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            #sidebar {
+                padding: 15px;
+            }
+            .nav-menu-icon {
+        display: flex;
+        flex-direction: column;  /* Ensure it shows up on mobile view */
+    }
+
+/* Ensuring nav links are hidden by default */
+.nav-links {
+    display: none; /* Hide the menu links by default */
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    font-size: xx-small;
+    width: 150px; /* Adjust the width to your desired size */
+    height: auto; /* Auto height to fit content */
+    background-color: #000000ef;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Initially position off-screen */
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease; /* Smooth transition when menu opens/closes */
+    color: rgb(255, 255, 255);
+}
+        }
+
+        .more-graphs-btn {
+            background-color: #34d399;
+            color: #0d1117;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .more-graphs-btn:hover {
+            background-color: #2da15e;
+        }
+
+        /* Sidebar p Tag Styling */
+        #sidebar p {
+            color: #f5f5f5;
+            font-size: 16px;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        #sidebar p strong {
+            color: #58a6ff;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo"><img src="./images/logo.png" alt="" id="logo-img"> <h4>PROFILE</h4></div>
+        <!-- Menu Icon (Hamburger) -->
+        <div class="nav-menu-icon" onclick="toggleMenu()">
+            <!-- Updated Menu Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </div>
+        
+            <div class="nav-links">
+
+        <a href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>              
+           Home
+        </a>
+
+        </a>
+        <a href="courses.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+            </svg>
+            Courses
+        </a>
+
+        <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+            Profile
+            </a>
+    </div>
+    </nav>
+    <div class="main">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div id="details">
+                <img src="./images/profile.jpg" alt="Profile Picture">
+                <h2>Tusha Rahul</h2>
+                <p>Student | AI Enthusiast | Web Developer</p>
+                <p><strong>📍</strong> Location: Andhra Pradesh, INDIA</p>
+                <p><strong>📧</strong> Email: tusharahul2003@gmail.com</p>
+                <p><strong>🌟</strong> Followers: 200 | Following: 80</p>
+                <p><strong>🏆</strong> Badges: Open Source Contributor, Web Dev Specialist</p>
+                <p><strong>🎓</strong> Certificates: JavaScript, Python, Full Stack Development</p>
+                <!-- <a href="#">View GitHub Profile</a> -->
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress"><br>
+            <h4 style="text-align: center;">Courses Progress</h4>
+            <!-- Combined Courses (In Progress + Completed) -->
+            <div class="course-in-progress">
+                <h5><strong>In Progress:</strong> Full Stack Web Development</h5>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar" style="--progress-width: 75%;"></div>
+                </div>
+            </div>
+            <div class="course-in-progress">
+                <h5><strong>In Progress:</strong> HTML & CSS</h5>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar" style="--progress-width: 90%;"></div>
+                </div>
+            </div>
+
+            <!-- Completed Courses -->
+            <div class="course-completed">
+                <h5><strong>Completed:</strong> JavaScript</h5>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar progress-bar-full"></div>
+                </div>
+            </div>
+            <div class="course-completed">
+                <h5><strong>Completed:</strong> Advanced SQL</h5>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar progress-bar-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graph Section -->
+        <div class="graphs">
+            <h4 style="padding-bottom:5px; text-align: center;">Activity Graphs</h4>
+            <div class="graph">
+                <div class="graph-title">Courses Completed Over Time</div>
+                <canvas id="coursesGraph"></canvas>
+            </div>
+            <div class="graph" style="padding-bottom:0px;margin-bottom: 0px;" >
+                <div class="graph-title">Learning Cycle Over Time</div>
+                <canvas id="learningCycleGraph"></canvas>
+            </div>
+            <button class="more-graphs-btn" onclick="changeGraphs()">More Graphs</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+
+    <!-- Chart.js script -->
+    <script>
+// Default Graphs (Line Chart)
+const coursesData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [{
+        label: 'Courses Completed',
+        data: [2, 3, 4, 5, 6, 7],
+        borderColor: '#34d399',
+        backgroundColor: 'rgba(52, 211, 153, 0.2)',
+        borderWidth: 2,
+        fill: true,
+    }]
+};
+
+const coursesConfig = {
+    type: 'line',
+    data: coursesData,
+    options: {
+        responsive: true,
+        scales: {
+            x: { beginAtZero: true },
+            y: { beginAtZero: true },
+        }
+    }
+};
+
+const learningCycleData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [{
+        label: 'Learning Cycle Progress',
+        data: [10, 20, 30, 40, 50, 60],
+        borderColor: '#58a6ff',
+        backgroundColor: 'rgba(88, 166, 255, 0.2)',
+        borderWidth: 2,
+        fill: true,
+    }]
+};
+
+const learningCycleConfig = {
+    type: 'line',
+    data: learningCycleData,
+    options: {
+        responsive: true,
+        scales: {
+            x: { beginAtZero: true },
+            y: { beginAtZero: true },
+        }
+    }
+};
+
+// Render Default Graphs
+let coursesGraph = new Chart(document.getElementById('coursesGraph'), coursesConfig);
+let learningCycleGraph = new Chart(document.getElementById('learningCycleGraph'), learningCycleConfig);
+
+// Flag to track the graph state
+let graphState = "default";
+
+// Change Graphs Function (Switch Graphs)
+function changeGraphs() {
+    // Destroy the existing graphs
+    coursesGraph.destroy();
+    learningCycleGraph.destroy();
+
+    // Toggle between the default and new graphs
+    if (graphState === "default") {
+        // Create New Graphs (Bar, Doughnut, etc.)
+        const coursesBarData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Courses Completed',
+                data: [3, 4, 5, 6, 7, 8],
+                backgroundColor: '#34d399',
+                borderColor: '#34d399',
+                borderWidth: 1
+            }]
+        };
+
+        const coursesBarConfig = {
+            type: 'bar',
+            data: coursesBarData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true },
+                }
+            }
+        };
+
+        const learningCycleDoughnutData = {
+            labels: ['Completed', 'In Progress', 'Not Started'],
+            datasets: [{
+                label: 'Learning Cycle Progress',
+                data: [60, 30, 10],
+                backgroundColor: ['#34d399', '#58a6ff', '#ff5733'],
+                borderColor: ['#34d399', '#58a6ff', '#ff5733'],
+                borderWidth: 1
+            }]
+        };
+
+        const learningCycleDoughnutConfig = {
+            type: 'doughnut',
+            data: learningCycleDoughnutData,
+            options: {
+                responsive: true,
+            }
+        };
+
+        // Reinitialize the graphs with new types
+        coursesGraph = new Chart(document.getElementById('coursesGraph'), coursesBarConfig);
+        learningCycleGraph = new Chart(document.getElementById('learningCycleGraph'), learningCycleDoughnutConfig);
+
+        // Update the graph state to "new"
+        graphState = "new";
+    } else {
+        // Revert to the default graphs (Line charts)
+        coursesGraph = new Chart(document.getElementById('coursesGraph'), coursesConfig);
+        learningCycleGraph = new Chart(document.getElementById('learningCycleGraph'), learningCycleConfig);
+
+        // Update the graph state to "default"
+        graphState = "default";
+    }
+}
+
+function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('active'); // Toggles the active class
+    }
+    </script>
+</body>
+</html>
