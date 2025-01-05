@@ -203,7 +203,7 @@ footer p {
     justify-content: center; /* Center align content within #trend */
     gap: 10px; /* Optional: Space between items */
     width: 90%;
-    height: 100%;
+    height: 600px;
 }
 
 
@@ -216,6 +216,7 @@ footer p {
 }
 
 .button {
+    margin-bottom: 10px;
     --primary: #ff5569;
     --neutral-1: #8b98a2;
     --neutral-2: #5f5b5b;
@@ -280,6 +281,7 @@ footer p {
     align-items: center;
     justify-content: center;
   }
+
   .state .icon {
     position: absolute;
     left: 0;
@@ -523,7 +525,7 @@ footer p {
 
 /* Individual course card */
 .course-card {
-    width: 500px; /* Slightly wider for a balanced look */
+    width:100%; /* Slightly wider for a balanced look */
     background-color: #ffffff; /* Clean, professional white background */
     border-radius: 12px; /* Softer, modern corners */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Elegant depth with shadow */
@@ -691,6 +693,7 @@ header {
     flex-direction: column; /* Stack items vertically */
     padding: 10px; /* Reduce padding */
     gap: 5px; /* Reduce gap between items */ /* Reduce width for better fit */
+    
 }
 
 #btn {
@@ -699,11 +702,16 @@ header {
 }
 
 .course-card {
-    width: 90%; /* Adjust width to fit smaller screens */
+  height: 100%;
+    width: 100%; /* Adjust width to fit smaller screens */
     margin: 20px auto; /* Center-align cards */
+    padding: 30px;
 }
 
 .course-details {
+    height: 100%;
+    width: 100%;
+    margin: 20px;
     padding: 15px; /* Reduce padding */
 }
 
@@ -720,6 +728,8 @@ header {
 }
 
 .enroll-btn {
+  
+  background-color: #4CAF50; /* Change button color */
     padding: 10px 20px; /* Adjust button size */
     font-size: 0.95rem;
 }
