@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML & CSS Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #292929;
+            border-radius: 5px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question p {
+            margin: 5px 0;
+        }
+
+        .options {
+            margin-left: 20px;
+        }
+
+        .options label {
+            display: block;
+            background-color: #1e1e1e;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: larger;
+            background-color: #58a6ff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #357abf;
+        }
+
+        #timer {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: orange;
+        }
+
+        .results {
+            text-align: center;
+            background-color: #292929;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .next-course {
+            background-color: #4caf50;
+            color: white;
+            font-size: larger;
+        }
+
+        .retry-test {
+            background-color: #f44336;
+            color: white;
+            font-size: larger;
+        }
+
+        #quizForm {
+            display: block;
+        }
+
+        #resultSection {
+            display: none;
+        }
+
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 250px;
+            width: 250px;
+        }
+
+        .explanation {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .explanation p {
+            margin-bottom: 15px;
+        }
+
+        .correct {
+            color: #4caf50;
+        }
+
+        .incorrect {
+            color: #f44336;
+        }
+
+        .time-taken {
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTML & CSS Test</h1>
+        <div id="timer">Time Left: <span id="time">300</span> seconds</div>
+
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div class="question">
+                <p>1. What does HTML stand for?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="A"> Hypertext Markup Language</label>
+                    <label><input type="radio" name="q1" value="B"> Hyperlinks and Text Markup Language</label>
+                    <label><input type="radio" name="q1" value="C"> Home Tool Markup Language</label>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <p>2. What does CSS stand for?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="A"> Computer Style Sheets</label>
+                    <label><input type="radio" name="q2" value="B"> Cascading Style Sheets</label>
+                    <label><input type="radio" name="q2" value="C"> Colorful Style Sheets</label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <p>3. Which tag is used to define an internal style sheet in HTML?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="A"> &lt;style&gt;</label>
+                    <label><input type="radio" name="q3" value="B"> &lt;script&gt;</label>
+                    <label><input type="radio" name="q3" value="C"> &lt;css&gt;</label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <p>4. Which tag is used to create a hyperlink in HTML?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="A"> &lt;link&gt;</label>
+                    <label><input type="radio" name="q4" value="B"> &lt;a&gt;</label>
+                    <label><input type="radio" name="q4" value="C"> &lt;href&gt;</label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question">
+                <p>5. What does JavaScript do?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="A"> Makes the webpage interactive</label>
+                    <label><input type="radio" name="q5" value="B"> Styles the webpage</label>
+                    <label><input type="radio" name="q5" value="C"> Creates the structure of the webpage</label>
+                </div>
+            </div>
+
+            <button type="button" onclick="submitQuiz()">Submit</button>
+        </form>
+
+        <div id="resultSection" class="results">
+            <h2>Your Test Results</h2>
+            <div id="score"></div>
+            <div id="chartContainer" class="chart-container">
+                <canvas id="resultChart"></canvas>
+            </div>
+            <div id="explanation" class="explanation"></div>
+            <div id="nextCourseBtn" style="display: none;">
+                <button class="next-course" onclick="goToNextCourse()">Go to Next Course</button>
+            </div>
+            <div id="retryBtn" style="display: none;">
+                <button class="retry-test" onclick="retryTest()">Retake Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let timeLeft = 300; // 5 minutes in seconds
+        let correctAnswers = 0;
+        const answers = {
+            q1: "A", // Hypertext Markup Language
+            q2: "B", // Cascading Style Sheets
+            q3: "A", // <style> tag
+            q4: "B", // <a> tag
+            q5: "A"  // Makes the webpage interactive
+        };
+        const timeTaken = {};
+
+        const explanations = {
+    q1: "HTML stands for Hypertext Markup Language. It is the standard markup language used to create web pages. HTML defines the structure of web pages using a system of tags, such as <html>, <head>, and <body>.",
+    q2: "CSS stands for Cascading Style Sheets. It is used to describe the presentation of a web page written in HTML. CSS controls the layout, colors, fonts, and overall look of the page, allowing designers to separate content from design.",
+    q3: "The <style> tag is used to define internal CSS styles within an HTML document. It is placed inside the <head> section of the HTML document and contains CSS code that applies styles to elements in the page.",
+    q4: "The <a> tag is used to create hyperlinks in HTML. It links one webpage to another or to a specific part of the same webpage. The <a> tag contains an 'href' attribute that defines the target URL.",
+    q5: "JavaScript is a programming language that is primarily used to make web pages interactive. It enables dynamic content, such as responding to user input, manipulating HTML elements, validating forms, and fetching data from servers without reloading the page."
+};
+
+
+        // Timer functionality
+        function startTimer() {
+            timer = setInterval(function () {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById('time').textContent = timeLeft;
+                } else {
+                    clearInterval(timer);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // Start the timer as soon as the page loads
+        window.onload = function () {
+            startTimer();
+            for (let i = 1; i <= 5; i++) {
+                timeTaken[`q${i}`] = 0;
+            }
+            trackTime();
+        };
+
+        function trackTime() {
+            setInterval(() => {
+                for (let i = 1; i <= 5; i++) {
+                    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (selected) timeTaken[`q${i}`]++;
+                }
+            }, 1000);
+        }
+
+        // Submit quiz and check answers
+        function submitQuiz() {
+            clearInterval(timer);
+            const form = document.getElementById('quizForm');
+            form.style.display = 'none';
+
+            const explanationDiv = document.getElementById('explanation');
+            explanationDiv.innerHTML = "<h3>Explanations:</h3>";
+
+            for (let i = 1; i <= 5; i++) {
+                const selectedAnswer = form.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === answers[`q${i}`]) {
+                        correctAnswers++;
+                        explanationDiv.innerHTML += `<p class='correct'><strong>Question ${i}:</strong> Correct! (${answers[`q${i}`]}) - ${explanations[`q${i}`]}</p>`;
+
+                    } else {
+                        explanationDiv.innerHTML += `<p class='incorrect'><strong>Question ${i}:</strong> Wrong. Your Answer: ${selectedAnswer.value}. Correct Answer: ${answers[`q${i}`]}. <br><em>${explanations[`q${i}`]}</em></p>`;
+                    }
+                } else {
+                    explanationDiv.innerHTML += `<p class='incorrect'><strong>Question ${i}:</strong> No answer selected. Correct Answer: ${answers[`q${i}`]}. <br><em>${explanations[`q${i}`]}</em></p>`;
+                }
+            }
+
+            // Display results
+            const resultSection = document.getElementById('resultSection');
+            resultSection.style.display = 'block';
+
+            // Score calculation and display
+            const totalQuestions = Object.keys(answers).length;
+            const scorePercentage = (correctAnswers / totalQuestions) * 100;
+            const scoreText = `You got ${correctAnswers} out of ${totalQuestions} questions correct (${scorePercentage.toFixed(1)}%).`;
+            document.getElementById('score').innerHTML = `<h3>${scoreText}</h3>`;
+
+            // Display chart
+            const ctx = document.getElementById('resultChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Correct', 'Incorrect'],
+                    datasets: [{
+                        data: [correctAnswers, totalQuestions - correctAnswers],
+                        backgroundColor: ['#4caf50', '#f44336'],
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                        },
+                    },
+                }
+            });
+
+            // Time taken display
+            explanationDiv.innerHTML += "<h3>Time Taken Per Question:</h3>";
+            for (let i = 1; i <= 5; i++) {
+                explanationDiv.innerHTML += `<p>Question ${i}: ${timeTaken[`q${i}`]} seconds</p>`;
+            }
+
+            // Next Course button and Retry button
+            if (scorePercentage >= 80) {
+                document.getElementById('nextCourseBtn').style.display = 'block';
+            } else {
+                document.getElementById('retryBtn').style.display = 'block';
+            }
+        }
+
+        // Navigate to the next course (or page)
+        function goToNextCourse() {
+            window.location.href = "nextCourse.html";  // Replace with actual next course URL
+        }
+
+        // Retry the test
+        function retryTest() {
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

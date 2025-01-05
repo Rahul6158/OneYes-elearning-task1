@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Quiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #292929;
+            border-radius: 5px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question p {
+            margin: 5px 0;
+        }
+
+        .options {
+            margin-left: 20px;
+        }
+
+        .options label {
+            display: block;
+            background-color: #1e1e1e;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: larger;
+            background-color: #58a6ff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #357abf;
+        }
+
+        #timer {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: orange;
+        }
+
+        .results {
+            text-align: center;
+            background-color: #292929;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .next-course {
+            background-color: #4caf50;
+            color: white;
+            font-size: larger;
+        }
+
+        .retry-test {
+            background-color: #f44336;
+            color: white;
+            font-size: larger;
+        }
+
+        #quizForm {
+            display: block;
+        }
+
+        #resultSection {
+            display: none;
+        }
+
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 250px;
+            width: 250px;
+        }
+
+        .explanation {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .explanation p {
+            margin-bottom: 15px;
+        }
+
+        .correct {
+            color: #4caf50;
+        }
+
+        .incorrect {
+            color: #f44336;
+        }
+
+        .time-taken {
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Machine Learning Quiz</h1>
+        <div id="timer">Time Left: <span id="time">300</span> seconds</div>
+
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div class="question">
+                <p>1. What is the primary goal of supervised learning?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="A"> To cluster data into groups</label>
+                    <label><input type="radio" name="q1" value="B"> To map input to output using labeled data</label>
+                    <label><input type="radio" name="q1" value="C"> To reduce data dimensionality</label>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <p>2. Which algorithm is commonly used for classification tasks?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="A"> K-Means</label>
+                    <label><input type="radio" name="q2" value="B"> Logistic Regression</label>
+                    <label><input type="radio" name="q2" value="C"> Principal Component Analysis (PCA)</label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <p>3. What does overfitting mean in machine learning?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="A"> The model performs well on new data but poorly on training data</label>
+                    <label><input type="radio" name="q3" value="B"> The model performs well on training data but poorly on new data</label>
+                    <label><input type="radio" name="q3" value="C"> The model ignores features during training</label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <p>4. Which evaluation metric is suitable for binary classification problems?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="A"> Accuracy</label>
+                    <label><input type="radio" name="q4" value="B"> Mean Squared Error</label>
+                    <label><input type="radio" name="q4" value="C"> Silhouette Score</label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question">
+                <p>5. What does the term "feature scaling" refer to in machine learning?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="A"> Converting categorical data into numerical form</label>
+                    <label><input type="radio" name="q5" value="B"> Normalizing or standardizing feature values</label>
+                    <label><input type="radio" name="q5" value="C"> Selecting the most important features</label>
+                </div>
+            </div>
+
+            <button type="button" onclick="submitQuiz()">Submit</button>
+        </form>
+
+        <div id="resultSection" class="results">
+            <h2>Your Test Results</h2>
+            <div id="score"></div>
+            <div id="chartContainer" class="chart-container">
+                <canvas id="resultChart"></canvas>
+            </div>
+            <div id="explanation" class="explanation"></div>
+            <div id="nextCourseBtn" style="display: none;">
+                <button class="next-course" onclick="goToNextCourse()">Go to Next Course</button>
+            </div>
+            <div id="retryBtn" style="display: none;">
+                <button class="retry-test" onclick="retryTest()">Retake Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let timeLeft = 300;
+        let correctAnswers = 0;
+        const answers = {
+            q1: "B",
+            q2: "B",
+            q3: "B",
+            q4: "A",
+            q5: "B"
+        };
+        const explanations = {
+            q1: "Supervised learning maps input to output using labeled data to make predictions.",
+            q2: "Logistic Regression is commonly used for classification tasks in machine learning.",
+            q3: "Overfitting occurs when a model performs well on training data but poorly on unseen data.",
+            q4: "Accuracy is a suitable metric for binary classification problems.",
+            q5: "Feature scaling refers to normalizing or standardizing feature values to a common range."
+        };
+
+        function startTimer() {
+            timer = setInterval(function () {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById('time').textContent = timeLeft;
+                } else {
+                    clearInterval(timer);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            startTimer();
+        };
+
+        function submitQuiz() {
+            clearInterval(timer);
+            const form = document.getElementById('quizForm');
+            form.style.display = 'none';
+
+            const explanationDiv = document.getElementById('explanation');
+            explanationDiv.innerHTML = "<h3>Explanations:</h3>";
+
+            for (let i = 1; i <= 5; i++) {
+                const selectedAnswer = form.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === answers[`q${i}`]) {
+                        correctAnswers++;
+                        explanationDiv.innerHTML += `<p class='correct'><strong>Question ${i}:</strong> Correct! (${answers[`q${i}`]}) - ${explanations[`q${i}`]}</p>`;
+                    } else {
+                        explanationDiv.innerHTML += `<p class='incorrect'><strong>Question ${i}:</strong> Wrong. (${answers[`q${i}`]}) - ${explanations[`q${i}`]}</p>`;
+                    }
+                } else {
+                    explanationDiv.innerHTML += `<p class='incorrect'><strong>Question ${i}:</strong> No answer selected.</p>`;
+                }
+            }
+
+            displayChart();
+        }
+
+        function displayChart() {
+            const ctx = document.getElementById('resultChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Correct', 'Incorrect'],
+                    datasets: [{
+                        label: 'Quiz Results',
+                        data: [correctAnswers, 5 - correctAnswers],
+                        backgroundColor: ['#4caf50', '#f44336'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('score').innerHTML = `<h3>Your Score: ${correctAnswers}/5</h3>`;
+        }
+
+        function goToNextCourse() {
+            alert("Redirecting to the next course...");
+        }
+
+        function retryTest() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

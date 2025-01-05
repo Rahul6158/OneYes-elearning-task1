@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Data Science Quiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #292929;
+            border-radius: 5px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question p {
+            margin: 5px 0;
+        }
+
+        .options {
+            margin-left: 20px;
+        }
+
+        .options label {
+            display: block;
+            background-color: #1e1e1e;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: larger;
+            background-color: #58a6ff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #357abf;
+        }
+
+        #timer {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: orange;
+        }
+
+        .results {
+            text-align: center;
+            background-color: #292929;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .next-course {
+            background-color: #4caf50;
+            color: white;
+            font-size: larger;
+        }
+
+        .retry-test {
+            background-color: #f44336;
+            color: white;
+            font-size: larger;
+        }
+
+        #quizForm {
+            display: block;
+        }
+
+        #resultSection {
+            display: none;
+        }
+
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 250px;
+            width: 250px;
+        }
+
+        .explanation {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .explanation p {
+            margin-bottom: 15px;
+        }
+
+        .correct {
+            color: #4caf50;
+        }
+
+        .incorrect {
+            color: #f44336;
+        }
+
+        .time-taken {
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python Data Science Quiz</h1>
+        <div id="timer">Time Left: <span id="time">300</span> seconds</div>
+
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div class="question">
+                <p>1. What is the primary data structure in Pandas?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="A"> List</label>
+                    <label><input type="radio" name="q1" value="B"> DataFrame</label>
+                    <label><input type="radio" name="q1" value="C"> Dictionary</label>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <p>2. Which Python library is widely used for data visualization?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="A"> NumPy</label>
+                    <label><input type="radio" name="q2" value="B"> Pandas</label>
+                    <label><input type="radio" name="q2" value="C"> Matplotlib</label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <p>3. Which of the following is used to handle missing data in Pandas?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="A"> dropna()</label>
+                    <label><input type="radio" name="q3" value="B"> fillna()</label>
+                    <label><input type="radio" name="q3" value="C"> Both A and B</label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <p>4. In machine learning, what is the term for a set of data used to train a model?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="A"> Training Set</label>
+                    <label><input type="radio" name="q4" value="B"> Testing Set</label>
+                    <label><input type="radio" name="q4" value="C"> Validation Set</label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question">
+                <p>5. What does the method .head() do in Pandas?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="A"> Displays the first row of the dataset</label>
+                    <label><input type="radio" name="q5" value="B"> Displays the first n rows of the dataset</label>
+                    <label><input type="radio" name="q5" value="C"> Displays the last row of the dataset</label>
+                </div>
+            </div>
+
+            <button type="button" onclick="submitQuiz()">Submit</button>
+        </form>
+
+        <div id="resultSection" class="results">
+            <h2>Your Test Results</h2>
+            <div id="score"></div>
+            <div id="chartContainer" class="chart-container">
+                <canvas id="resultChart"></canvas>
+            </div>
+            <div id="explanation" class="explanation"></div>
+            <div id="nextCourseBtn" style="display: none;">
+                <button class="next-course" onclick="goToNextCourse()">Go to Next Course</button>
+            </div>
+            <div id="retryBtn" style="display: none;">
+                <button class="retry-test" onclick="retryTest()">Retake Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let timeLeft = 300; // 5 minutes in seconds
+        let correctAnswers = 0;
+        const answers = {
+            q1: "B", // DataFrame
+            q2: "C", // Matplotlib
+            q3: "C", // Both A and B
+            q4: "A", // Training Set
+            q5: "B"  // Displays the first n rows of the dataset
+        };
+        const timeTaken = {};
+
+        const explanations = {
+            q1: "The primary data structure in Pandas is the DataFrame. It is a 2-dimensional labeled data structure, similar to a table in a database or an Excel spreadsheet.",
+            q2: "Matplotlib is a popular Python library used for data visualization. It provides an object-oriented API for embedding plots into applications.",
+            q3: "In Pandas, missing data can be handled using methods like dropna() to remove missing values, or fillna() to replace them with a specified value or method.",
+            q4: "In machine learning, a Training Set is a set of data used to train a model. It is typically a subset of the data, with the remaining data being used for testing and validation.",
+            q5: "The .head() method in Pandas displays the first n rows of a dataset. By default, it shows the first 5 rows, but the number of rows can be specified."
+        };
+
+        // Timer functionality
+        function startTimer() {
+            timer = setInterval(function () {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById('time').textContent = timeLeft;
+                } else {
+                    clearInterval(timer);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // Start the timer as soon as the page loads
+        window.onload = function () {
+            startTimer();
+            for (let i = 1; i <= 5; i++) {
+                timeTaken[`q${i}`] = 0;
+            }
+            trackTime();
+        };
+
+        function trackTime() {
+            setInterval(() => {
+                for (let i = 1; i <= 5; i++) {
+                    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (selected) timeTaken[`q${i}`]++;
+                }
+            }, 1000);
+        }
+
+        // Submit quiz and check answers
+        function submitQuiz() {
+            clearInterval(timer);
+            const form = document.getElementById('quizForm');
+            form.style.display = 'none';
+
+            const explanationDiv = document.getElementById('explanation');
+            explanationDiv.innerHTML = "<h3>Explanations:</h3>";
+
+            for (let i = 1; i <= 5; i++) {
+                const selectedAnswer = form.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === answers[`q${i}`]) {
+                        correctAnswers++;
+                        explanationDiv.innerHTML += `<p class='correct'><strong>Question ${i}:</strong> Correct! (${answers[`q${i}`]}) - ${explanations[`q${i}`]}</p>`;
+                    } else {
+                        explanationDiv.innerHTML += `<p class='incorrect'><strong>Question ${i}:</strong> Wrong. (${answers[`q${i}`]}) - ${explanations[`q${i}`]}</p>`;
+                    }
+                } else {
+                    explanationDiv.innerHTML += `<p class='incorrect'><strong>Question ${i}:</strong> No answer selected.</p>`;
+                }
+            }
+
+            displayChart();
+        }
+
+        function displayChart() {
+            const ctx = document.getElementById('resultChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Correct', 'Incorrect'],
+                    datasets: [{
+                        label: 'Quiz Results',
+                        data: [correctAnswers, 5 - correctAnswers],
+                        backgroundColor: ['#4caf50', '#f44336'],
+                        hoverOffset: 4
+                    }]
+                }
+            });
+
+            document.getElementById('score').innerHTML = `<h2>Your Score: ${correctAnswers} out of 5</h2>`;
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        function goToNextCourse() {
+            alert("Redirecting to the next course...");
+        }
+
+        function retryTest() {
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
