@@ -687,12 +687,14 @@ header {
 .free-cors {
     flex-direction: column; /* Stack children vertically */
  /* Adjust padding */
+    height: 100%;
 }
 
 #trend {
     flex-direction: column; /* Stack items vertically */
     padding: 10px; /* Reduce padding */
     gap: 5px; /* Reduce gap between items */ /* Reduce width for better fit */
+    height: 100%;
     
 }
 
@@ -702,21 +704,29 @@ header {
 }
 
 .course-card {
-  height: 100%;
     width: 100%; /* Adjust width to fit smaller screens */
     margin: 20px auto; /* Center-align cards */
-    padding: 30px;
+    height: 400px;
 }
 
 .course-details {
+  display: contents;
+  align-items: center;
     height: 100%;
-    width: 100%;
-    margin: 20px;
-    padding: 15px; /* Reduce padding */
+    width: 80%;
+    margin: 0px;
+    padding: 0px; /* Reduce padding */
+    text-align: center;
 }
 
 .course-details h3 {
     font-size: 1.25rem; /* Slightly smaller font */
+    text-align: center;
+}
+
+.course-details p{
+  /* border: 2px solid black; */
+  padding: 10px;
 }
 
 .course-price {
