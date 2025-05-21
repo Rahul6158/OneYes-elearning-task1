@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Budget Gym Diet Plan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #2ecc71;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th {
+        display: none;
+      }
+      td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+      }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Budget-Friendly Gym Diet (Indian Male, 22 Yrs)</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Meal</th>
+        <th>Items</th>
+        <th>Protein (g)</th>
+        <th>Calories</th>
+        <th>Minerals & Nutrients</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Meal">Breakfast</td>
+        <td data-label="Items">2 Eggs, 50g Oats, 1 Banana, 5 Almonds</td>
+        <td data-label="Protein">18g</td>
+        <td data-label="Calories">400</td>
+        <td data-label="Minerals">Iron, Calcium, Vit B12, Omega-3</td>
+      </tr>
+      <tr>
+        <td data-label="Meal">Lunch</td>
+        <td data-label="Items">2 Roti, 50g Soy, 100g Curd, 1 Carrot</td>
+        <td data-label="Protein">25g</td>
+        <td data-label="Calories">550</td>
+        <td data-label="Minerals">Calcium, Zinc, Fiber, Vit A</td>
+      </tr>
+      <tr>
+        <td data-label="Meal">Pre-Workout</td>
+        <td data-label="Items">1 Banana, Black Coffee</td>
+        <td data-label="Protein">1g</td>
+        <td data-label="Calories">120</td>
+        <td data-label="Minerals">Potassium, Caffeine</td>
+      </tr>
+      <tr>
+        <td data-label="Meal">Post-Workout</td>
+        <td data-label="Items">40g Sattu with Water + Lemon</td>
+        <td data-label="Protein">15g</td>
+        <td data-label="Calories">160</td>
+        <td data-label="Minerals">Iron, Folate, Magnesium</td>
+      </tr>
+      <tr>
+        <td data-label="Meal">Dinner</td>
+        <td data-label="Items">2 Roti, 50g Homemade Paneer, 1 tbsp Ghee, 1 Cucumber</td>
+        <td data-label="Protein">22g</td>
+        <td data-label="Calories">500</td>
+        <td data-label="Minerals">Protein, Fat-soluble vitamins, Fiber</td>
+      </tr>
+      <tr>
+        <td data-label="Meal"><strong>Total</strong></td>
+        <td data-label="Items"><strong>All meals</strong></td>
+        <td data-label="Protein"><strong>81g</strong></td>
+        <td data-label="Calories"><strong>1730</strong></td>
+        <td data-label="Minerals"><strong>Balanced</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
