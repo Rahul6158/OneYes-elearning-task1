@@ -1,116 +1,305 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Budget Gym Diet Plan</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 20px;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #2ecc71;
-      color: white;
-    }
-    @media (max-width: 768px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      th {
-        display: none;
-      }
-      td {
-        position: relative;
-        padding-left: 50%;
-        text-align: left;
-      }
-      td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 10px;
-        font-weight: bold;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>OneYes learn-up</title>
 </head>
 <body>
 
-  <h1>Budget-Friendly Gym Diet (Indian Male, 22 Yrs)</h1>
+<!-- Navigation Bar -->
+<nav>
+    <div class="nav-logo"><a href="https://tusharahul.netlify.app/" target="_blank"><img src="./images/logo.png" alt="" id="logo-img"></a><h4>OneYes</h4></div>
+    <!-- Menu Icon (Hamburger) -->
+    <div class="nav-menu-icon" onclick="toggleMenu()">
+        <!-- Updated Menu Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+    </div>
+    
+    <div class="nav-links">
 
-  <table>
-    <thead>
-      <tr>
-        <th>Meal</th>
-        <th>Items</th>
-        <th>Protein (g)</th>
-        <th>Calories</th>
-        <th>Minerals & Nutrients</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-label="Meal">Breakfast</td>
-        <td data-label="Items">2 Eggs, 50g Oats, 1 Banana, 5 Almonds</td>
-        <td data-label="Protein">18g</td>
-        <td data-label="Calories">400</td>
-        <td data-label="Minerals">Iron, Calcium, Vit B12, Omega-3</td>
-      </tr>
-      <tr>
-        <td data-label="Meal">Lunch</td>
-        <td data-label="Items">2 Roti, 50g Soy, 100g Curd, 1 Carrot</td>
-        <td data-label="Protein">25g</td>
-        <td data-label="Calories">550</td>
-        <td data-label="Minerals">Calcium, Zinc, Fiber, Vit A</td>
-      </tr>
-      <tr>
-        <td data-label="Meal">Pre-Workout</td>
-        <td data-label="Items">1 Banana, Black Coffee</td>
-        <td data-label="Protein">1g</td>
-        <td data-label="Calories">120</td>
-        <td data-label="Minerals">Potassium, Caffeine</td>
-      </tr>
-      <tr>
-        <td data-label="Meal">Post-Workout</td>
-        <td data-label="Items">40g Sattu with Water + Lemon</td>
-        <td data-label="Protein">15g</td>
-        <td data-label="Calories">160</td>
-        <td data-label="Minerals">Iron, Folate, Magnesium</td>
-      </tr>
-      <tr>
-        <td data-label="Meal">Dinner</td>
-        <td data-label="Items">2 Roti, 50g Homemade Paneer, 1 tbsp Ghee, 1 Cucumber</td>
-        <td data-label="Protein">22g</td>
-        <td data-label="Calories">500</td>
-        <td data-label="Minerals">Protein, Fat-soluble vitamins, Fiber</td>
-      </tr>
-      <tr>
-        <td data-label="Meal"><strong>Total</strong></td>
-        <td data-label="Items"><strong>All meals</strong></td>
-        <td data-label="Protein"><strong>81g</strong></td>
-        <td data-label="Calories"><strong>1730</strong></td>
-        <td data-label="Minerals"><strong>Balanced</strong></td>
-      </tr>
-    </tbody>
-  </table>
+        <a href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>              
+           Home
+        </a>
+
+        </a>
+        <a href="courses.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+            </svg>
+            Courses
+        </a>
+
+        <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+            Profile
+        </a>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<header>
+    <video autoplay muted loop>
+        <source src="./images/bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h1>Empowering Your Learning Journey with Expertise and Innovation</h1>
+    <p>Transforming Education for the Modern Learner.</p>
+    <div id="btn"><a href="courses.html" onclick="delayNavigation(event, 'courses.html')"><button class="button" style="align-self: center;">
+        <div class="outline"></div>
+        <div class="state state--default">
+          <div class="icon">
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g style="filter: url(#shadow)">
+                <path
+                  d="M14.2199 21.63C13.0399 21.63 11.3699 20.8 10.0499 16.83L9.32988 14.67L7.16988 13.95C3.20988 12.63 2.37988 10.96 2.37988 9.78001C2.37988 8.61001 3.20988 6.93001 7.16988 5.60001L15.6599 2.77001C17.7799 2.06001 19.5499 2.27001 20.6399 3.35001C21.7299 4.43001 21.9399 6.21001 21.2299 8.33001L18.3999 16.82C17.0699 20.8 15.3999 21.63 14.2199 21.63ZM7.63988 7.03001C4.85988 7.96001 3.86988 9.06001 3.86988 9.78001C3.86988 10.5 4.85988 11.6 7.63988 12.52L10.1599 13.36C10.3799 13.43 10.5599 13.61 10.6299 13.83L11.4699 16.35C12.3899 19.13 13.4999 20.12 14.2199 20.12C14.9399 20.12 16.0399 19.13 16.9699 16.35L19.7999 7.86001C20.3099 6.32001 20.2199 5.06001 19.5699 4.41001C18.9199 3.76001 17.6599 3.68001 16.1299 4.19001L7.63988 7.03001Z"
+                  fill="currentColor"
+                ></path>
+                <path
+                  d="M10.11 14.4C9.92005 14.4 9.73005 14.33 9.58005 14.18C9.29005 13.89 9.29005 13.41 9.58005 13.12L13.16 9.53C13.45 9.24 13.93 9.24 14.22 9.53C14.51 9.82 14.51 10.3 14.22 10.59L10.64 14.18C10.5 14.33 10.3 14.4 10.11 14.4Z"
+                  fill="currentColor"
+                ></path>
+              </g>
+              <defs>
+                <filter id="shadow">
+                  <fedropshadow
+                    dx="0"
+                    dy="1"
+                    stdDeviation="0.6"
+                    flood-opacity="0.5"
+                  ></fedropshadow>
+                </filter>
+              </defs>
+            </svg>
+          </div>
+          <p>
+            <span style="--i:0">E</span>
+            <span style="--i:1">x</span>
+            <span style="--i:2">p</span>
+            <span style="--i:3">l</span>
+            <span style="--i:4">o</span>
+            <span style="--i:5">r</span>
+            <span style="--i:6">e</span>
+            <span style="--i:7">m</span>
+            <span style="--i:8">o</span>
+            <span style="--i:9">r</span>
+            <span style="--i:10">e</span>
+          </p>
+        </div>
+        <div class="state state--sent">
+          <div class="icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              height="1em"
+              width="1em"
+              stroke-width="0.5px"
+              stroke="black"
+            >
+              <g style="filter: url(#shadow)">
+                <path
+                  fill="currentColor"
+                  d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
+                ></path>
+                <path
+                  fill="currentColor"
+                  d="M10.5795 15.5801C10.3795 15.5801 10.1895 15.5001 10.0495 15.3601L7.21945 12.5301C6.92945 12.2401 6.92945 11.7601 7.21945 11.4701C7.50945 11.1801 7.98945 11.1801 8.27945 11.4701L10.5795 13.7701L15.7195 8.6301C16.0095 8.3401 16.4895 8.3401 16.7795 8.6301C17.0695 8.9201 17.0695 9.4001 16.7795 9.6901L11.1095 15.3601C10.9695 15.5001 10.7795 15.5801 10.5795 15.5801Z"
+                ></path>
+              </g>
+            </svg>
+          </div>
+          <p>
+            <span style="--i:5">d</span>
+            <span style="--i:6">o</span>
+            <span style="--i:7">n</span>
+            <span style="--i:8">e</span>
+          </p>
+        </div>
+      </button></a>
+      </div>
+</header>
+
+
+<div class="free-cors">
+    <h1 style="padding: 20px; font-family: monospace;" >Trending Courses</h1>
+    <div id="trend">
+        <!-- Course 7 -->
+        <div class="course-card">
+            <img src="./images/sql.png" alt="Course 7 Image" class="course-image">
+            <div class="course-details">
+                <h3>Advanced SQL & Databases</h3>
+                <p class="course-price">$159.99</p>
+                <p class="course-description">Enhance your SQL skills and work with advanced database concepts to handle complex queries.</p>
+                <a href="./courses.html" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+    
+        <!-- Course 9 -->
+        <div class="course-card">
+            <img src="./images/mad.jpeg" alt="Course 9 Image" class="course-image">
+            <div class="course-details">
+                <h3>Mobile App Development</h3>
+                <p class="course-price">$229.99</p>
+                <p class="course-description">Develop native mobile applications for both Android and iOS using cross-platform tools.</p>
+                <a href="./courses.html" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 10 -->
+        <div class="course-card">
+            <img src="./images/cs.png" alt="Course 10 Image" class="course-image">
+            <div class="course-details">
+                <h3>Cybersecurity Fundamentals</h3>
+                <p class="course-price">$199.9</p>
+                <p class="course-description">Learn the core principles of cybersecurity to protect against online threats and attacks.</p>
+                <a href="./courses.html" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="free-cors">
+    <h1 style="padding: 20px; font-family: monospace;">Free Courses</h1>
+    <div id="trend">
+        <!-- Course 8 -->
+        <div class="course-card">
+            <img src="./images/dsr.jpeg" alt="Course 8 Image" class="course-image">
+            <div class="course-details">
+                <h3>Data Analysis with R</h3>
+                <p class="course-price">Free</p>
+                <p class="course-description">Learn how to use R for data analysis and visualization in this comprehensive course.</p>
+                <a href="./courses.html" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+    
+        <!-- Course 2 -->
+        <div class="course-card">
+            <img src="./images/pyds.jpeg" alt="Course 2 Image" class="course-image">
+            <div class="course-details">
+                <h3>Python for Data Science</h3>
+                <p class="course-price">Free</p>
+                <p class="course-description">Master Python programming for data science and machine learning projects.</p>
+                <a href="./python_ds.html" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    
+        <!-- Course 3 -->
+        <div class="course-card">
+            <img src="./images/mlpy.jpeg" alt="Course 3 Image" class="course-image">
+            <div class="course-details">
+                <h3>Machine Learning A-Z</h3>
+                <p class="course-price">Free</p>
+                <p class="course-description">Understand machine learning algorithms and apply them in real-world projects.</p>
+                <a href="./ml.html" class="enroll-btn">Enroll Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="btn"><a href="courses.html" onclick="delayNavigation(event, 'courses.html')"><button class="button" style="align-self: center;">
+    <div class="outline"></div>
+    <div class="state state--default">
+      <div class="icon">
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g style="filter: url(#shadow)">
+            <path
+              d="M14.2199 21.63C13.0399 21.63 11.3699 20.8 10.0499 16.83L9.32988 14.67L7.16988 13.95C3.20988 12.63 2.37988 10.96 2.37988 9.78001C2.37988 8.61001 3.20988 6.93001 7.16988 5.60001L15.6599 2.77001C17.7799 2.06001 19.5499 2.27001 20.6399 3.35001C21.7299 4.43001 21.9399 6.21001 21.2299 8.33001L18.3999 16.82C17.0699 20.8 15.3999 21.63 14.2199 21.63ZM7.63988 7.03001C4.85988 7.96001 3.86988 9.06001 3.86988 9.78001C3.86988 10.5 4.85988 11.6 7.63988 12.52L10.1599 13.36C10.3799 13.43 10.5599 13.61 10.6299 13.83L11.4699 16.35C12.3899 19.13 13.4999 20.12 14.2199 20.12C14.9399 20.12 16.0399 19.13 16.9699 16.35L19.7999 7.86001C20.3099 6.32001 20.2199 5.06001 19.5699 4.41001C18.9199 3.76001 17.6599 3.68001 16.1299 4.19001L7.63988 7.03001Z"
+              fill="currentColor"
+            ></path>
+            <path
+              d="M10.11 14.4C9.92005 14.4 9.73005 14.33 9.58005 14.18C9.29005 13.89 9.29005 13.41 9.58005 13.12L13.16 9.53C13.45 9.24 13.93 9.24 14.22 9.53C14.51 9.82 14.51 10.3 14.22 10.59L10.64 14.18C10.5 14.33 10.3 14.4 10.11 14.4Z"
+              fill="currentColor"
+            ></path>
+          </g>
+          <defs>
+            <filter id="shadow">
+              <fedropshadow
+                dx="0"
+                dy="1"
+                stdDeviation="0.6"
+                flood-opacity="0.5"
+              ></fedropshadow>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+      <p>
+        <span style="--i:0">E</span>
+        <span style="--i:1">x</span>
+        <span style="--i:2">p</span>
+        <span style="--i:3">l</span>
+        <span style="--i:4">o</span>
+        <span style="--i:5">r</span>
+        <span style="--i:6">e</span>
+        <span style="--i:7">m</span>
+        <span style="--i:8">o</span>
+        <span style="--i:9">r</span>
+        <span style="--i:10">e</span>
+      </p>
+    </div>
+    <div class="state state--sent">
+      <div class="icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          height="1em"
+          width="1em"
+          stroke-width="0.5px"
+          stroke="black"
+        >
+          <g style="filter: url(#shadow)">
+            <path
+              fill="currentColor"
+              d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
+            ></path>
+            <path
+              fill="currentColor"
+              d="M10.5795 15.5801C10.3795 15.5801 10.1895 15.5001 10.0495 15.3601L7.21945 12.5301C6.92945 12.2401 6.92945 11.7601 7.21945 11.4701C7.50945 11.1801 7.98945 11.1801 8.27945 11.4701L10.5795 13.7701L15.7195 8.6301C16.0095 8.3401 16.4895 8.3401 16.7795 8.6301C17.0695 8.9201 17.0695 9.4001 16.7795 9.6901L11.1095 15.3601C10.9695 15.5001 10.7795 15.5801 10.5795 15.5801Z"
+            ></path>
+          </g>
+        </svg>
+      </div>
+      <p>
+        <span style="--i:5">d</span>
+        <span style="--i:6">o</span>
+        <span style="--i:7">n</span>
+        <span style="--i:8">e</span>
+      </p>
+    </div>
+  </button></a>
+  </div>
+
+<!-- Footer Section -->
+<footer>
+    <p>&copy; Tusha Rahul Bellamkonda</p>
+</footer>
+
+<!-- JavaScript for Toggle Menu -->
+<script src="script.js"></script>
 
 </body>
 </html>
